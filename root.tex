@@ -1,0 +1,37 @@
+\documentclass[t]{beamer}
+\usetheme{iclpt}
+\usepackage{url}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{color}
+
+\newcommand\MyBox[2]{
+  \fbox{\lower0.75cm
+    \vbox to 1.7cm{\vfil
+      \hbox to 1.7cm{\hfil\parbox{1.4cm}{#1\\#2}\hfil}
+      \vfil}%
+  }%
+}
+
+\AtBeginSection{\frame{\sectionpage}}
+\AtBeginSubsection{\frame{\subsectionpage}}
+
+% for page numbers
+\expandafter\def\expandafter\insertshorttitle\expandafter{%
+  \insertshorttitle\hfill%
+  \insertframenumber\,/\,\inserttotalframenumber}
+	
+	
+\author{Dr Nathan Green}
+\title[Decision analytic modelling for economic evaluation]{Economic Evaluation of an Active TB Diagnostic Test using Decision Trees:\\ A Decision Analytic Approach}
+
+\begin{document}
+\frame{\maketitle}
+
+
+\input{intro}
+\input{decisiontrees}
+%\input{testperformance}
+
+
+\end{document}

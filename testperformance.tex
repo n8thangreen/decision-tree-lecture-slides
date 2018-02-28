@@ -1,0 +1,120 @@
+
+\section{Exploring test performance component}
+
+
+\begin{frame}
+\frametitle{Fundamental classification statistics}
+\begin{itemize}
+	\item \alert{True positive (TP)}: Number of correct predicted positives.
+	\pause
+	\item \alert{True negative (TN)}: Number of correct predicted negatived.
+	\pause
+	\item \alert{False positive (FP)}: Number of incorrect predicted positives. Equivalent with Type I error.
+	\pause
+	\item \alert{False negative (FN)}: Number of incorrect predicted negatives. Equivalent with Type II error.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Contingency tables}
+%Also called \alrt{confusion tables} or \alert{error matrices}.
+\noindent
+\renewcommand\arraystretch{1.5}
+\setlength\tabcolsep{0pt}
+\begin{tabular}{c >{\bfseries}r @{\hspace{0.7em}}c @{\hspace{0.4em}}c @{\hspace{0.7em}}l}
+  \multirow{10}{*}{\parbox{1.1cm}{\bfseries\raggedleft Test\\ diagnosis}} & 
+    & \multicolumn{2}{c}{\bfseries True diagnosis} & \\
+  & & \bfseries p & \bfseries n & \bfseries Total \\
+  & p$'$ & \MyBox{True}{Positive} & \MyBox{False}{Positive} & P$'$ \\[2.4em]
+  & n$'$ & \MyBox{False}{Negative} & \MyBox{True}{Negative} & N$'$ \\
+  & Total & P & N &
+\end{tabular}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Contingency table summary statistics}
+\begin{itemize}
+	\item \alert{Sensitivity} $= p(T|D) = \frac{TP}{TP+FN}=\frac{TP}{P} $
+	\pause
+	\item \alert{Specificity} $= p(T^c|D^c) = \frac{TN}{FP+TN}=\frac{TN}{N}$
+	\pause
+	\item \alert{Prevalence} $= \frac{TP+FN}{M}=\frac{P}{M}$
+	\pause
+	\item \alert{Positive predictive value (PPV)/precision} $= p(D|T) = \frac{TP}{TP+FP}$
+	\pause
+	\item \alert{False discovery rate (FDR)} $= 1-PPV = p(D^c|T) = \frac{FP}{TP+FP}$
+	\pause
+	\item \alert{Negative predictive value (NPV)} $= p(D^c|T^c) = \frac{TN}{FN+TN}$
+	\pause
+		\item \alert{False omission rate (FOR)} = 1-NPV $= p(D|T^c) = \frac{FN}{FN+TN}$
+	\pause
+	\item \alert{Accuracy} $= \frac{TP+TN}{M}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Contingency table summary statistics}
+Notice that the PPV and NPV depend on the prevalence. We can alternatively compute them using:
+\begin{itemize}
+	\item PPV = 
+	$$
+	\frac{sensitivity \times prevalence}{sensitivity \times prevalence + (1- specificity) \times (1-prevalence)}
+	$$
+		\item NPV =
+		$$
+		\frac{specificity \times (1-prevalence)}{(1-sensitivity) \times prevalence + specificity \times (1-prevalence)}
+		$$
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{How to compare the performance of diagnostic tests?}
+
+\begin{itemize}
+\item Dichotomous test (only 2 results)
+\pause
+\begin{itemize}
+\item Odds ratios
+\item Likelihood ratios
+\item Sensitivity specificity, PPV, NPV
+
+\end{itemize}
+
+\pause
+\item Multilevel level ($>2$ results)
+\pause
+\begin{itemize}
+\item Receiver operating characteristic curve (ROC)
+\end{itemize}
+\end{itemize}
+\end{frame} 
+
+\subsection{ROC curves}
+
+\begin{frame}
+\frametitle{Receiver operating characteristic curves (ROC)}
+\begin{itemize}
+\item TP rate (sensitivity) on vertical axis and FP rate (1-specificity) on horizontal, for varying classification threshold
+\item Illustrates the \alert{trade-off} between sensitivity and specificity 
+\item A single curve summary of the information in the cumulative distribution functions of the scores of the two classes.
+\item c.f. {\it ROC Curves for Continuous Data}, Krzanowski and Hand (2009).
+\end{itemize}
+\end{frame} 
+
+\begin{frame}
+\frametitle{}
+ \includegraphics[width=\textwidth,height=1\textheight, keepaspectratio]{normalclassifier}
+\end{frame} 
+
+
+\begin{frame}
+\frametitle{}
+ \includegraphics[width=1\textwidth,height=1.2\textheight, keepaspectratio]{ROCexamples}
+\end{frame} 
+
+\begin{frame}
+\frametitle{End}
+\end{frame} 

@@ -1,0 +1,181 @@
+\section{Decision Trees}
+
+\begin{frame}
+\frametitle{Steps in constructing and analysing Decision Trees}
+A decision tree is a visual representation of a decision analysis:
+	\begin{itemize}
+		\item \alert{Structure} the tree
+		\pause
+		\item Estimate \alert{probabilities}
+		\pause
+		\item Estimate \alert{payoffs} (assign values to costs and outcomes)
+		\pause
+		\item Analyse the tree
+		\pause
+			\begin{itemize}
+				\item \alert{Evaluate} the tree
+				\item Explore \alert{uncertainty}
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Structuring the Decision Tree}
+A decision tree is made up of nodes, branches and outcomes
+
+	\begin{itemize}
+		\item Nodes:
+	\begin{itemize}
+		\pause
+		\item \textcolor{blue}{Decision node (square)}: Describes the problem. Deterministic choice.
+		\pause
+		\item \textcolor{green}{Chance node (circle)}: Represents the point at which several possible events can occur.
+		\pause
+		\item \textcolor{red}{Terminal node (triangle)}: Represents the end of a tree with a payoff attached.
+	\end{itemize}
+		\end{itemize}
+\end{frame}
+
+
+	\begin{frame}
+\frametitle{Structuring the Decision Tree}
+	\begin{itemize}
+		\item Branches issuing from a chance node represent possible events patients may experience at that point in the tree.
+		\item Branch probabilities represent the likelihood of each event.
+		\item The sequence of chance nodes from left to right usually follows the sequence of events.
+		\item The events stemming from a chance node must be \alert{mutually exclusive} and probabilities should sum to 1.
+	\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Advantages of Decision Trees}
+
+	\begin{itemize}
+		\item They enable the economic question to be structured in a \alert{meaningful} and \alert{visual} manner.
+		\pause
+		\item  They allow data informing the model parameters to be assimilated and, where appropriate, synthesised.
+		\pause
+		\item They are relatively simple to undertake and suitable for:
+		\begin{itemize}
+			\item Diseases that occur only once.
+			\item Decisions about acute care.
+			\item Decisions with short time frames.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Limitations of Decision Trees}
+
+	\begin{itemize}
+		\item They do not explicitly account for passage of time:
+			\begin{itemize}
+				\item Passage of time accounted for by outcome measure.
+				\item Limited ability to account for long term outcomes.
+			\end{itemize}
+			\pause
+		\item Possible to add branches but results in a complex model.
+		\item Other modelling techniques can handle repeated events better.
+		\item Structure of tree only allows for one-way progression of patient through model: Not movement back and forth between states.
+		\item Decision trees can still be useful as a sub-model.
+		\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{}
+ \includegraphics[width=1\textwidth,height=1.2\textheight, keepaspectratio]{newBMJscreenshot}
+\end{frame} 
+
+\begin{frame}
+\frametitle{NICE suspected TB pathway}
+ \includegraphics[width=1\textwidth,height=0.8\textheight, keepaspectratio]{NICEpathway}
+\end{frame} 
+
+\begin{frame}
+\frametitle{Simple decision tree example: New TST guidelines}
+ \includegraphics[width=\textwidth,height=0.8\textheight, keepaspectratio]{TSTdecisiontree}
+\end{frame}
+
+\begin{frame}
+\frametitle{Analysing Decision Trees}
+	\begin{itemize}
+		\item The decision tree is averaged-out and `folded-back' to get the expected payoffs for each strategy.
+		\item Estimated separately as the sum of products of the probability of events and their payoffs i.e.
+\alert{weighted average} of the outcome values.
+		\item Cost-effectiveness analysis: Strongly and extendedly dominated strategies removed and ICERs estimated.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Combined probabilities for each branch}
+ If probability of BCG is $0.1$ (c.f. NHS Immunisation Statistics, England 2012-13) then
+\begin{eqnarray*}
+p_1 &=& 0.1 \times 0.1 \times 0.8 = 0.008\\
+p_2 &=& 0.1 \times 0.1 \times 0.2 = 0.002\\
+p_3 &=& 0.1 \times 0.9 \times 0.15 = 0.0135\\
+p_4 &=& 0.1 \times 0.9 \times 0.85 = 0.0765\\
+p_5 &=& 0.9 \times 0.1 \times 0.95 = 0.0855\\
+p_6 &=& 0.9 \times 0.1 \times 0.05 = 0.0045\\
+p_7 &=& 0.9 \times 0.9 \times 0.35 = 0.2835\\
+p_8 &=& 0.9 \times 0.9 \times 0.65 = 0.5265
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Expected cost and health impact}
+	\begin{itemize}
+		\item Cost:
+		\end{itemize}
+\begin{eqnarray*}
+&& 0.008 \times 60 + 0.003 \times 10 + 0.0135 \times 60 + 0.0765 \times 10\\
+&& + 0.0855 \times 70 + 0.0045 \times 20 + 0.2835 \times 70 + 0.5265 \times 20\\
+&& = \alert{38.535}
+\end{eqnarray*}
+	\begin{itemize}
+		\item Health:
+		\end{itemize}
+\begin{eqnarray*}
+&& 0.008 \times 50 + 0.003 \times (-100) + 0.0135 \times (-10) + 0.0765 \times 0\\
+&&  + 0.0855 \times 50 + 0.0045 \times (-100) + 0.2835 \times (-10) + 0.5265 \times 0\\
+&& = \alert{0.955}
+\end{eqnarray*}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{}
+ \includegraphics[width=\textwidth,height=1\textheight, keepaspectratio]{cost-effectiveness-plane}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{}
+ \includegraphics[width=\textwidth,height=1\textheight, keepaspectratio]{dectree-tool.png}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Example simulated output}
+\begin{figure}
+\vspace*{-1cm}
+	\centering
+			\includegraphics[width=0.5\textwidth,height=1\textheight, keepaspectratio]{testcost-2.png}
+		\includegraphics[width=0.5\textwidth,height=1\textheight, keepaspectratio]{testcost-3.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example Output}
+\begin{figure}
+\vspace*{-1cm}
+	\centering
+			\includegraphics[width=0.5\textwidth,height=1\textheight, keepaspectratio]{testcost-4.png}
+		\includegraphics[width=0.5\textwidth,height=1\textheight, keepaspectratio]{testcost-5.png}
+\end{figure}
+\end{frame}
+
