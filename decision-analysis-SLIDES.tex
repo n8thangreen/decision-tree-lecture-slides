@@ -1,0 +1,536 @@
+\documentclass[t]{beamer}
+\usetheme{iclpt}
+\usepackage{url}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{color}
+
+\newcommand\MyBox[2]{
+  \fbox{\lower0.75cm
+    \vbox to 1.7cm{\vfil
+      \hbox to 1.7cm{\hfil\parbox{1.4cm}{#1\\#2}\hfil}
+      \vfil}%
+  }%
+}
+
+\AtBeginSection{\frame{\sectionpage}}
+\AtBeginSubsection{\frame{\subsectionpage}}
+
+% for page numbers
+\expandafter\def\expandafter\insertshorttitle\expandafter{%
+  \insertshorttitle\hfill%
+  \insertframenumber\,/\,\inserttotalframenumber}
+	
+	
+\author{Dr Nathan Green}
+\title[Decision analytic modelling for economic evaluation]{Economic Evaluation of an Active TB Diagnostic Test using Decision Trees:\\ A Decision Analytic Approach}
+
+\begin{document}
+\frame{\maketitle}
+
+
+\begin{frame}
+	\frametitle{Contents}
+	\tableofcontents[%
+% 		currentsection, % causes all sections but the current to be shown in a semi-transparent way.
+% 		currentsubsection, % causes all subsections but the current subsection in the current section to ...
+% 		hideallsubsections, % causes all subsections to be hidden.
+% 		hideothersubsections, % causes the subsections of sections other than the current one to be hidden.
+% 		part=, % part number causes the table of contents of part part number to be shown
+    	pausesections, % causes a \pause command to be issued before each section. This is useful if you
+% 		pausesubsections, %  causes a \pause command to be issued before each subsection.
+% 		sections={ overlay specification },
+	]
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Contents}
+	%\begin{itemize}
+	%\item What and why of economic evaluation
+	%\item Decision trees
+	%\item ROC curves
+	%\item Markov models
+	%\item 
+	%\end{itemize}
+%\end{frame}
+
+\section{What and why of economic evaluation}
+
+\begin{frame}
+\frametitle{What is economic evaluation?}
+	\begin{itemize}
+		\item Increasing acceptance that effectiveness information is necessary but not sufficient for decision making.
+		\uncover
+		\item Need to \alert{explicitly} consider costs and opportunity costs of different courses of action.
+		\item Economic methods can contribute to the decision making process.
+		\item Offer a \alert{coherent, explicit and theoretically-based} approach to:
+		\begin{itemize}
+			\item Identifying, measuring and valuing resource use, costs and
+outcomes.
+			\item Handling uncertainty.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{What is economic evaluation?}
+	\begin{itemize}
+	\item Economic evaluation: A comparison of alternative diagnostic or treatment options in terms of their \alert{costs} and \alert{outcomes}.
+
+		\begin{itemize}
+			\item \alert{Costs ($c$)}: The value of the resources involved in providing treatment and managing side-effects, symptoms and disease-related events.
+			\item \alert{Outcome ($e$)}: The health effects of the intervention.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{4 key components of a health economic evaluation}
+\begin{itemize}
+	\pause
+	\item \alert{Statistical model}: Estimate population parameters.
+	\pause
+	\item \alert{Economic model}: Combine parameters to get averages for cost and outcomes.
+	\pause
+	\item \alert{Decision analysis}: Summarise model results in suitable measures. What is the `best' course of action?
+	\pause
+	\item \alert{Uncertainty analysis}: How does different types of imperfect knowledge affect the results?
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{What is economic evaluation?}
+\begin{table}
+	\centering
+		\begin{tabular}{l l}
+		\hline
+\textbf{Type} & \textbf{Outcome measure} \\
+\hline \hline
+Cost-\alert{consequence} analysis
+(CCA) & Multiple outcomes reported in\\
+&disaggregated manner\\
+Cost-\alert{minimisation} analysis
+(CMA) & None (evidence or assumption of\\
+&equivalent outcomes)\\
+Cost-\alert{effectiveness} analysis
+(CEA) & Natural units (e.g. life years,\\
+ &cases detected)\\
+Cost-\alert{utility} analysis (CUA) & QALYs (longevity \\
+&and quality of life)\\
+Cost-\alert{benefit} analysis
+(CBA) & Monetary valuation\\
+\hline
+		\end{tabular}
+\end{table}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{What is economic evaluation?}
+	\begin{itemize}
+			\item \alert{Comparative methodology}: Interested in incremental costs and outcomes- multivariate results.\\
+			Can summarise population economic averages in a `cost per outcome' ratio using
+	\end{itemize}
+	
+	\begin{definition}
+Incremental Cost-Effectiveness Ratio (ICER)
+$$
+\frac{\Delta C}{\Delta E} = \frac{C_{new} - C_{old}}{E_{new} - E_{old}}
+$$
+where $C=\mathbb{E}[c|\theta]$ and $E=\mathbb{E}[e|\theta]$.
+\end{definition}
+	
+\end{frame}
+
+
+\subsection{RCTs}
+
+\begin{frame}
+\frametitle{Where can we get good evidence about cost-effectiveness?}
+\begin{itemize}
+\item A good source is \alert{randomised controlled trials (RCT)}:
+	\begin{itemize}
+		\item Unbiased estimates of treatment effects
+		\item Can collect outcome and resource use information prospectively
+		\item Obtain patient-specific data
+	\end{itemize}
+\item So why use a model to conduct an economic analysis then?
+	\begin{itemize}
+		\pause
+		\item Patients may not be representative
+		\pause
+		\item May be unsuitable for population interventions
+		\pause
+		\item May not compare all the relevant alternatives
+		\pause
+		\item Trial duration may not be long enough
+		\pause
+		\item We may be interested in long-term/lifetime costs and effects
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{RCTs: Patients may not be representative}
+
+	\begin{itemize}
+		\item Trials tend to provide evidence \alert{specific} to a particular setting or group of patients, and this may not represent patients commonly seen in \alert{clinical practice} or reflect the requirements for the particular decision problem being posed.
+		\item If there is a need to generalise to other settings or patient sub-groups, additional modelling of the trial baseline risks and resource usage informed by other sources may be required to make the results \alert{generalisable}.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{RCTs might not compare all the relevant alternatives}
+
+	\begin{itemize}
+		\item Economic evaluation is a comparative methodology for assessing the value of one course of action compared to another (or range of options).
+		\item A randomized trial may provide evidence on two or three options, but is unlikely to be able to provide evidence on \alert{all the relevant options} available.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Information in studies may have to be combined}
+	\begin{itemize}
+		\item A single trial is unlikely to provide all the information required, and it might be necessary to combine evidence from a \alert{range of sources}.
+		\item Important to scrutinise evidence for its applicability to the evaluation being undertaken.
+		\item In the case of economic evaluation this means evidence on \alert{resource utilisation, unit costs, effectiveness and quality of life}.
+		\item The range of sources may include trials but also \alert{cohort studies, surveys or patient records, expert opinion}.
+		\item Decision models can provide an organizing framework within which these different types of data can be synthesised.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{RCTs might not encompass time horizon}
+	\begin{itemize}
+		\item The appropriate time period for the purpose of an economic evaluation is the time period that is long enough to capture in full the differences in resource use, unit costs and benefits between the alternative options being evaluated.
+		\item Often, as is the case for interventions for chronic disease, this requires a time horizon that captures the patients lifetime.
+		\item Trials rarely provide evidence over the lifetime of all patients (except in cases of interventions for terminal illness).
+		\item There is therefore a need to extrapolate beyond the trial evidence, and decision models can provide a vehicle to extrapolate evidence from trials to a longer, more appropriate, time horizon.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Decision analysis}
+Decision analysis (DA) is an \alert{explicit quantitative} approach to decision making \alert{under uncertainty}.
+	\begin{itemize}
+		\item Mathematical representation of a series of possible events that flow from a set of alternative options being evaluated.
+		\item DA compares at least two alternatives.
+		\item The likelihood of each event is expressed as probability.
+		\item Each event has associated values/outcomes.
+		\item DA is based on the concept of \alert{expected value (EV)}.
+				\begin{itemize}
+		\item For a given option, EV is the sum of the values of each event weighted by the probability of the event.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\section{Decision Trees}
+
+\begin{frame}
+\frametitle{Steps in constructing and analysing Decision Trees}
+A decision tree is a visual representation of a decision analysis:
+	\begin{itemize}
+		\item \alert{Structure} the tree
+		\pause
+		\item Estimate \alert{probabilities}
+		\pause
+		\item Estimate \alert{payoffs} (assign values to costs and outcomes)
+		\pause
+		\item Analyse the tree
+		\pause
+			\begin{itemize}
+				\item \alert{Evaluate} the tree
+				\item Explore \alert{uncertainty}
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Structuring the Decision Tree}
+A decision tree is made up of nodes, branches and outcomes
+
+	\begin{itemize}
+		\item Nodes:
+	\begin{itemize}
+		\pause
+		\item \textcolor{blue}{Decision node (square)}: Describes the problem. Deterministic choice.
+		\pause
+		\item \textcolor{green}{Chance node (circle)}: Represents the point at which several possible events can occur.
+		\pause
+		\item \textcolor{red}{Terminal node (triangle)}: Represents the end of a tree with a payoff attached.
+	\end{itemize}
+		\end{itemize}
+\end{frame}
+
+
+	\begin{frame}
+\frametitle{Structuring the Decision Tree}
+	\begin{itemize}
+		\item Branches issuing from a chance node represent possible events patients may experience at that point in the tree.
+		\item Branch probabilities represent the likelihood of each event.
+		\item The sequence of chance nodes from left to right usually follows the sequence of events.
+		\item The events stemming from a chance node must be \alert{mutually exclusive} and probabilities should sum to 1.
+	\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Advantages of Decision Trees}
+
+	\begin{itemize}
+		\item They enable the economic question to be structured in a \alert{meaningful} and \alert{visual} manner.
+		\pause
+		\item  They allow data informing the model parameters to be assimilated and, where appropriate, synthesised.
+		\pause
+		\item They are relatively simple to undertake and suitable for:
+		\begin{itemize}
+			\item Diseases that occur only once.
+			\item Decisions about acute care.
+			\item Decisions with short time frames.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Limitations of Decision Trees}
+
+	\begin{itemize}
+		\item They do not explicitly account for passage of time:
+			\begin{itemize}
+				\item Passage of time accounted for by outcome measure.
+				\item Limited ability to account for long term outcomes.
+			\end{itemize}
+			\pause
+		\item Possible to add branches but results in a complex model.
+		\item Other modelling techniques can handle repeated events better.
+		\item Structure of tree only allows for one-way progression of patient through model: Not movement back and forth between states.
+		\item Decision trees can still be useful as a sub-model.
+		\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{}
+ \includegraphics[width=1\textwidth,height=1.2\textheight, keepaspectratio]{newBMJscreenshot}
+\end{frame} 
+
+\begin{frame}
+\frametitle{NICE suspected TB pathway}
+ \includegraphics[width=1\textwidth,height=0.8\textheight, keepaspectratio]{NICEpathway}
+\end{frame} 
+
+\begin{frame}
+\frametitle{Simple decision tree example: New TST guidelines}
+ \includegraphics[width=\textwidth,height=0.8\textheight, keepaspectratio]{TSTdecisiontree}
+\end{frame}
+
+\begin{frame}
+\frametitle{Analysing Decision Trees}
+	\begin{itemize}
+		\item The decision tree is averaged-out and `folded-back' to get the expected payoffs for each strategy.
+		\item Estimated separately as the sum of products of the probability of events and their payoffs i.e.
+\alert{weighted average} of the outcome values.
+		\item Cost-effectiveness analysis: Strongly and extendedly dominated strategies removed and ICERs estimated.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Combined probabilities for each branch}
+ If probability of BCG is $0.1$ (c.f. NHS Immunisation Statistics, England 2012-13) then
+\begin{eqnarray*}
+p_1 &=& 0.1 \times 0.1 \times 0.8 = 0.008\\
+p_2 &=& 0.1 \times 0.1 \times 0.2 = 0.002\\
+p_3 &=& 0.1 \times 0.9 \times 0.15 = 0.0135\\
+p_4 &=& 0.1 \times 0.9 \times 0.85 = 0.0765\\
+p_5 &=& 0.9 \times 0.1 \times 0.95 = 0.0855\\
+p_6 &=& 0.9 \times 0.1 \times 0.05 = 0.0045\\
+p_7 &=& 0.9 \times 0.9 \times 0.35 = 0.2835\\
+p_8 &=& 0.9 \times 0.9 \times 0.65 = 0.5265
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Expected cost and health impact}
+	\begin{itemize}
+		\item Cost:
+		\end{itemize}
+\begin{eqnarray*}
+&& 0.008 \times 60 + 0.003 \times 10 + 0.0135 \times 60 + 0.0765 \times 10\\
+&& + 0.0855 \times 70 + 0.0045 \times 20 + 0.2835 \times 70 + 0.5265 \times 20\\
+&& = \alert{38.535}
+\end{eqnarray*}
+	\begin{itemize}
+		\item Health:
+		\end{itemize}
+\begin{eqnarray*}
+&& 0.008 \times 50 + 0.003 \times (-100) + 0.0135 \times (-10) + 0.0765 \times 0\\
+&&  + 0.0855 \times 50 + 0.0045 \times (-100) + 0.2835 \times (-10) + 0.5265 \times 0\\
+&& = \alert{0.955}
+\end{eqnarray*}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{}
+ \includegraphics[width=\textwidth,height=1\textheight, keepaspectratio]{cost-effectiveness-plane}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{}
+ \includegraphics[width=\textwidth,height=1\textheight, keepaspectratio]{dectree-tool.png}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Example simulated output}
+\begin{figure}
+\vspace*{-1cm}
+	\centering
+			\includegraphics[width=0.5\textwidth,height=1\textheight, keepaspectratio]{testcost-2.png}
+		\includegraphics[width=0.5\textwidth,height=1\textheight, keepaspectratio]{testcost-3.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example Output}
+\begin{figure}
+\vspace*{-1cm}
+	\centering
+			\includegraphics[width=0.5\textwidth,height=1\textheight, keepaspectratio]{testcost-4.png}
+		\includegraphics[width=0.5\textwidth,height=1\textheight, keepaspectratio]{testcost-5.png}
+\end{figure}
+\end{frame}
+
+
+\section{Exploring test performance component}
+
+
+\begin{frame}
+\frametitle{Fundamental classification statistics}
+\begin{itemize}
+	\item \alert{True positive (TP)}: Number of correct predicted positives.
+	\pause
+	\item \alert{True negative (TN)}: Number of correct predicted negatived.
+	\pause
+	\item \alert{False positive (FP)}: Number of incorrect predicted positives. Equivalent with Type I error.
+	\pause
+	\item \alert{False negative (FN)}: Number of incorrect predicted negatives. Equivalent with Type II error.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Contingency tables}
+%Also called \alrt{confusion tables} or \alert{error matrices}.
+\noindent
+\renewcommand\arraystretch{1.5}
+\setlength\tabcolsep{0pt}
+\begin{tabular}{c >{\bfseries}r @{\hspace{0.7em}}c @{\hspace{0.4em}}c @{\hspace{0.7em}}l}
+  \multirow{10}{*}{\parbox{1.1cm}{\bfseries\raggedleft Test\\ diagnosis}} & 
+    & \multicolumn{2}{c}{\bfseries True diagnosis} & \\
+  & & \bfseries p & \bfseries n & \bfseries Total \\
+  & p$'$ & \MyBox{True}{Positive} & \MyBox{False}{Positive} & P$'$ \\[2.4em]
+  & n$'$ & \MyBox{False}{Negative} & \MyBox{True}{Negative} & N$'$ \\
+  & Total & P & N &
+\end{tabular}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Contingency table summary statistics}
+\begin{itemize}
+	\item \alert{Sensitivity} $= p(T|D) = \frac{TP}{TP+FN}=\frac{TP}{P} $
+	\pause
+	\item \alert{Specificity} $= p(T^c|D^c) = \frac{TN}{FP+TN}=\frac{TN}{N}$
+	\pause
+	\item \alert{Prevalence} $= \frac{TP+FN}{M}=\frac{P}{M}$
+	\pause
+	\item \alert{Positive predictive value (PPV)/precision} $= p(D|T) = \frac{TP}{TP+FP}$
+	\pause
+	\item \alert{False discovery rate (FDR)} $= 1-PPV = p(D^c|T) = \frac{FP}{TP+FP}$
+	\pause
+	\item \alert{Negative predictive value (NPV)} $= p(D^c|T^c) = \frac{TN}{FN+TN}$
+	\pause
+		\item \alert{False omission rate (FOR)} = 1-NPV $= p(D|T^c) = \frac{FN}{FN+TN}$
+	\pause
+	\item \alert{Accuracy} $= \frac{TP+TN}{M}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Contingency table summary statistics}
+Notice that the PPV and NPV depend on the prevalence. We can alternatively compute them using:
+\begin{itemize}
+	\item PPV = 
+	$$
+	\frac{sensitivity \times prevalence}{sensitivity \times prevalence + (1- specificity) \times (1-prevalence)}
+	$$
+		\item NPV =
+		$$
+		\frac{specificity \times (1-prevalence)}{(1-sensitivity) \times prevalence + specificity \times (1-prevalence)}
+		$$
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{How to compare the performance of diagnostic tests?}
+
+\begin{itemize}
+\item Dichotomous test (only 2 results)
+\pause
+\begin{itemize}
+\item Odds ratios
+\item Likelihood ratios
+\item Sensitivity specificity, PPV, NPV
+
+\end{itemize}
+
+\pause
+\item Multilevel level ($>2$ results)
+\pause
+\begin{itemize}
+\item Receiver operating characteristic curve (ROC)
+\end{itemize}
+\end{itemize}
+\end{frame} 
+
+\subsection{ROC curves}
+
+\begin{frame}
+\frametitle{Receiver operating characteristic curves (ROC)}
+\begin{itemize}
+\item TP rate (sensitivity) on vertical axis and FP rate (1-specificity) on horizontal, for varying classification threshold
+\item Illustrates the \alert{trade-off} between sensitivity and specificity 
+\item A single curve summary of the information in the cumulative distribution functions of the scores of the two classes.
+\item c.f. {\it ROC Curves for Continuous Data}, Krzanowski and Hand (2009).
+\end{itemize}
+\end{frame} 
+
+\begin{frame}
+\frametitle{}
+ \includegraphics[width=\textwidth,height=1\textheight, keepaspectratio]{normalclassifier}
+\end{frame} 
+
+
+\begin{frame}
+\frametitle{}
+ \includegraphics[width=1\textwidth,height=1.2\textheight, keepaspectratio]{ROCexamples}
+\end{frame} 
+
+\begin{frame}
+\frametitle{End}
+\end{frame} 
+
+
+\end{document}
